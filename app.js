@@ -46,6 +46,7 @@ var title_scene = {
     create() {
         game.stage.backgroundColor = GAME_BACKGROUND;
         restart_key = game.input.keyboard.addKey(Phaser.KeyCode.R);
+        game.input.keyboard.removeKeyCapture(Phaser.KeyCode.R); // to enable ctrl + r (browser reload)
 
         var title_text = game.add.text(0, 0, 'S + F or R + V ?', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
         title_text.x = game.world.centerX - title_text.width / 2;
@@ -77,6 +78,7 @@ var main_scene = {
         key_f = game.input.keyboard.addKey(Phaser.KeyCode.F);
         key_r = game.input.keyboard.addKey(Phaser.KeyCode.R);
         key_v = game.input.keyboard.addKey(Phaser.KeyCode.V);
+        game.input.keyboard.removeKeyCapture(Phaser.KeyCode.R); // to enable ctrl + r (browser reload)
 
         timer = game.time.create(false);
 
@@ -113,6 +115,7 @@ var success_scene = {
 
     create() {
         restart_key = game.input.keyboard.addKey(Phaser.KeyCode.R);
+        game.input.keyboard.removeKeyCapture(Phaser.KeyCode.R); // to enable ctrl + r (browser reload)
 
         var title_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
         title_text.text = 'Clear.';
@@ -149,6 +152,7 @@ var gameover_scene = {
 
     create() {
         restart_key = game.input.keyboard.addKey(Phaser.KeyCode.R);
+        game.input.keyboard.removeKeyCapture(Phaser.KeyCode.R); // to enable ctrl + r (browser reload)
 
         var image = game.add.image(0, 0, "oni");
         image.width = game.width;
