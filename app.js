@@ -39,7 +39,9 @@ WebFont.load({
 
 
 var title_scene = {
-    preload() {},
+    preload() {
+        game.load.image('oni', './oni.png');
+    },
 
     create() {
         game.stage.backgroundColor = GAME_BACKGROUND;
@@ -143,7 +145,6 @@ var success_scene = {
 
 var gameover_scene = {
     preload() {
-        game.load.image('oni', './oni.png');
     },
 
     create() {
