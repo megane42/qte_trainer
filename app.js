@@ -40,7 +40,7 @@ WebFont.load({
 
 var title_scene = {
     preload() {
-        game.load.image('oni', './oni.png');
+        game.load.image('oni', './img/oni.png');
     },
 
     create() {
