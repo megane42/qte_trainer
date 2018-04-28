@@ -7,8 +7,10 @@ const GAME_BACKGROUND = '#000';
 const TOTAL_SUBJECT = 10;
 
 const FONT = 'Special Elite';
+const FONT2 = 'VT323';
 const FONT_COLOR_WHITE = '#fff';
 const FONT_COLOR_RED   = '#f00';
+const FONT_SIZE_S  = '32px';
 const FONT_SIZE_L  = '64px';
 const FONT_SIZE_LL = '128px';
 
@@ -23,8 +25,10 @@ var key_r;
 var key_v;
 var restart_key;
 
+var record_text1;
+
 WebFont.load({
-    google: { families: [ FONT ] },
+    google: { families: [ FONT, FONT2 ] },
     active: function() {
         game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, 'game_container');
         game.state.add("title", title_scene);
@@ -85,10 +89,17 @@ var main_scene = {
         subject = game.add.text(16, 16, 'S + F', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
         subject.kill();
 
+        record_text = game.add.text(0, 0, '', { font: FONT2, fontSize: FONT_SIZE_S, fill: FONT_COLOR_WHITE });
+        record_text.text = records_to_s();
+        record_text.x = game.world.centerX - record_text.width / 2;
+        record_text.y = 0.75 * game.height - record_text.height / 2;
+
         display_next_subject();
     },
 
     update() {
+        record_text.text = records_to_s();
+
         if (subject.alive && key_s.isDown && key_f.isDown) {
             if (subject.text === 'S + F') {
                 success();
@@ -123,7 +134,7 @@ var success_scene = {
         title_text.y = 0.25 * game.height - title_text.height / 2;
 
         var average = records.reduce( (sum, x, _) => { return sum + x; }, 0 ) / records.length;
-        average = average.toFixed(4) + ' s'
+        average = average.toFixed(3) + ' s'
 
         var result_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
         result_text.text = 'average: ' + average;
@@ -183,7 +194,7 @@ var gameover_scene = {
 function display_next_subject() {
     subject.text = Math.round(Math.random()) ? 'S + F' : 'R + V';
 
-    var next_ms = 3000 * Math.random();
+    var next_ms = 1000 + 2000 * Math.random();
     setTimeout(function() {
         timer.destroy();
         timer.start();
@@ -205,4 +216,13 @@ function success() {
 
 function gameover() {
     game.state.start("gameover");
+}
+
+function records_to_s() {
+    var str = "";
+    for (var i = 0; i < TOTAL_SUBJECT; i++) {
+        str += records[i] ? records[i].toFixed(3) + "s " : "------ ";
+        str += i === TOTAL_SUBJECT / 2  - 1 ? "\n" : "";
+    }
+    return str;
 }
