@@ -7,7 +7,7 @@ const GAME_BACKGROUND = '#000';
 const TOTAL_SUBJECT = 10;
 
 const FONT = 'Special Elite';
-const FONT2 = 'VT323';
+const FONT_MONO = 'VT323';
 const FONT_COLOR_WHITE = '#fff';
 const FONT_COLOR_RED   = '#f00';
 const FONT_SIZE_S  = '32px';
@@ -28,7 +28,7 @@ var restart_key;
 var record_text1;
 
 WebFont.load({
-    google: { families: [ FONT, FONT2 ] },
+    google: { families: [ FONT, FONT_MONO ] },
     active: function() {
         game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, 'game_container');
         game.state.add("title", title_scene);
@@ -49,6 +49,7 @@ var title_scene = {
 
     create() {
         game.stage.backgroundColor = GAME_BACKGROUND;
+
         restart_key = game.input.keyboard.addKey(Phaser.KeyCode.R);
         game.input.keyboard.removeKeyCapture(Phaser.KeyCode.R); // to enable ctrl + r (browser reload)
 
@@ -86,10 +87,10 @@ var main_scene = {
 
         timer = game.time.create(false);
 
-        subject = game.add.text(16, 16, 'S + F', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
+        subject = game.add.text(0, 0, 'S + F', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
         subject.kill();
 
-        record_text = game.add.text(0, 0, '', { font: FONT2, fontSize: FONT_SIZE_S, fill: FONT_COLOR_WHITE });
+        record_text = game.add.text(0, 0, '', { font: FONT_MONO, fontSize: FONT_SIZE_S, fill: FONT_COLOR_WHITE });
         record_text.text = records_to_s();
         record_text.x = game.world.centerX - record_text.width / 2;
         record_text.y = 0.75 * game.height - record_text.height / 2;
@@ -193,6 +194,8 @@ var gameover_scene = {
 
 function display_next_subject() {
     subject.text = Math.round(Math.random()) ? 'S + F' : 'R + V';
+    subject.x = Math.random() * (game.width - subject.width);
+    subject.y = Math.random() * (game.height - subject.height) * 0.5;
 
     var next_ms = 1000 + 2000 * Math.random();
     setTimeout(function() {
