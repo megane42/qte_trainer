@@ -143,7 +143,7 @@ var success_scene = {
 
 var gameover_scene = {
     preload() {
-        game.load.image('oni', 'oni.png');
+        game.load.image('oni', './oni.png');
     },
 
     create() {
