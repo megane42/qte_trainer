@@ -24,6 +24,7 @@ var key_f;
 var key_r;
 var key_v;
 var restart_key;
+var tweet_key;
 
 WebFont.load({
     google: { families: [ FONT, FONT_MONO ] },
@@ -125,6 +126,7 @@ var success_scene = {
 
     create() {
         restart_key = game.input.keyboard.addKey(Phaser.KeyCode.R);
+        tweet_key   = game.input.keyboard.addKey(Phaser.KeyCode.T);
         game.input.keyboard.removeKeyCapture(Phaser.KeyCode.R); // to enable ctrl + r (browser reload)
 
         var title_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
@@ -132,14 +134,14 @@ var success_scene = {
         title_text.x = game.world.centerX - title_text.width / 2;
         title_text.y = 0.25 * game.height - title_text.height / 2;
 
-        var average = (records.reduce( (sum, x, _) => { return sum + x; }, 0 ) / records.length).toFixed(3);
+        var average = records_to_avg();
         var result_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
         result_text.text = 'average: ' + average + 's';
         result_text.x = game.world.centerX - result_text.width / 2;
         result_text.y = 0.5 * game.height - result_text.height / 2;
 
-        var desc_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
-        desc_text.text = 'press R to restart';
+        var desc_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_S, fill: FONT_COLOR_WHITE });
+        desc_text.text = 'press R to retry\npress T to tweet';
         desc_text.x = game.world.centerX - desc_text.width / 2;
         desc_text.y = 0.75 * game.height - desc_text.height / 2;
 
@@ -152,6 +154,9 @@ var success_scene = {
     update() {
         if (restart_key.isDown) {
             game.state.start("main");
+        }
+        if (tweet_key.isDown) {
+            tweet('My Score is ' + records_to_avg() + ' s. Have you played?', location.href, 'QTE_Trainer');
         }
     }
 }
@@ -178,7 +183,7 @@ var gameover_scene = {
         title_text.y = 0.25 * game.height - title_text.height / 2;
 
         var desc_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
-        desc_text.text = 'press R to restart';
+        desc_text.text = 'press R to retry';
         desc_text.x = game.world.centerX - desc_text.width / 2;
         desc_text.y = 0.75 * game.height - desc_text.height / 2;
     },
@@ -229,4 +234,8 @@ function records_to_s() {
         str += i === TOTAL_SUBJECT / 2  - 1 ? "\n" : "";
     }
     return str;
+}
+
+function records_to_avg() {
+    return (records.reduce( (sum, x) => { return sum + x; }, 0 ) / records.length).toFixed(3);
 }
