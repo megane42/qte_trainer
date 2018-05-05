@@ -237,5 +237,5 @@ function records_to_s() {
 }
 
 function records_to_avg() {
-    return (records.reduce( (sum, x) => { return sum + x; }, 0 ) / records.length).toFixed(3);
+    return parseFloat((records.reduce( (sum, x) => { return sum + x; }, 0 ) / records.length).toFixed(3));
 }
