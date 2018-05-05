@@ -25,3 +25,7 @@ canvas {
 #rank_container ol li:before {
     content: "(" counter(cnt) ") ";
 }
+
+#rank_container .highlight {
+    color: #f00;
+}

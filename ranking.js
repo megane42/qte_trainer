@@ -14,6 +14,11 @@ firebase.database()
         average_list.forEach(function(avg){
             var li = document.createElement('li');
             li.appendChild(document.createTextNode(avg + ' s'));
+
+            if (avg === records_to_avg()) {
+                li.className = 'highlight';
+            }
+
             ol.appendChild(li);
         });
 
