@@ -1,6 +1,8 @@
 body {
+    font-family: 'Special Elite', cursive;
     text-align: center;
     background: #000;
+    color: #fff;
 }
 
 canvas {
@@ -9,4 +11,17 @@ canvas {
 
 .logo {
     margin: 30px 10px;
+}
+
+#rank_container ol {
+    padding: 0px 0px;
+    list-style-type: none;
+}
+
+#rank_container ol li {
+    counter-increment: cnt;
+}
+
+#rank_container ol li:before {
+    content: "(" counter(cnt) ") ";
 }

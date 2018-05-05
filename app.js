@@ -25,8 +25,6 @@ var key_r;
 var key_v;
 var restart_key;
 
-var record_text1;
-
 WebFont.load({
     google: { families: [ FONT, FONT_MONO ] },
     active: function() {
@@ -134,11 +132,9 @@ var success_scene = {
         title_text.x = game.world.centerX - title_text.width / 2;
         title_text.y = 0.25 * game.height - title_text.height / 2;
 
-        var average = records.reduce( (sum, x, _) => { return sum + x; }, 0 ) / records.length;
-        average = average.toFixed(3) + ' s'
-
+        var average = (records.reduce( (sum, x, _) => { return sum + x; }, 0 ) / records.length).toFixed(3);
         var result_text = game.add.text(0, 0, '', { font: FONT, fontSize: FONT_SIZE_L, fill: FONT_COLOR_WHITE });
-        result_text.text = 'average: ' + average;
+        result_text.text = 'average: ' + average + 's';
         result_text.x = game.world.centerX - result_text.width / 2;
         result_text.y = 0.5 * game.height - result_text.height / 2;
 
@@ -146,6 +142,11 @@ var success_scene = {
         desc_text.text = 'press R to restart';
         desc_text.x = game.world.centerX - desc_text.width / 2;
         desc_text.y = 0.75 * game.height - desc_text.height / 2;
+
+        firebase.database().ref("records").push({
+            average: average,
+            timestamp: parseInt(new Date() / 1000)
+        });
     },
 
     update() {

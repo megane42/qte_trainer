@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>S + F or R + V ?</title>
+        <title>QTE Trainer</title>
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
         <script src="//cdn.jsdelivr.net/phaser/2.6.2/phaser.min.js"></script>
         <link rel="stylesheet" type="text/css" href="./app.css">
     </head>
     <body>
         <div id="game_container"></div>
-        <a href="http://commons.nicovideo.jp/search/tag/%E9%AC%BC%E3%81%A0%E3%81%8F%E3%82%93" target="_blank"><img src="./img/motoLogo.png" class="logo" alt="画像の元ネタ"></a>
+
+        <h2>Global Average</h2>
+        <div id="avg_container"></div>
+
+        <h2>Global High Score</h2>
+        <div id="rank_container"></div>
+
+        <a href="http://commons.nicovideo.jp/search/tag/鬼だくん" target="_blank"><img src="./img/motoLogo.png" class="logo" alt="画像の元ネタ"></a>
         <a href="http://com.nicovideo.jp/community/co17194" target="_blank"><img src="./img/aseLogo.png" class="logo" alt="汗だく実況プレイ"></a>
         <a href="https://github.com/megane42/qte_trainer" target="_blank"><img src="./img/githubLogo.png" class="logo" alt="github"></a>
 
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-database.js"></script>
+        <script>
+         // Initialize Firebase
+         var config = {
+             apiKey: "AIzaSyCV_gFIj4ZeG2BnbPCCq3gQQ_drSfVVzXk",
+             authDomain: "qte-trainer.firebaseapp.com",
+             databaseURL: "https://qte-trainer.firebaseio.com",
+             projectId: "qte-trainer",
+             storageBucket: "",
+             messagingSenderId: "229469762730"
+         };
+         firebase.initializeApp(config);
+        </script>
+
         <script src="./app.js"></script>
+        <script src="./average.js"></script>
+        <script src="./ranking.js"></script>
     </body>
 </html>
